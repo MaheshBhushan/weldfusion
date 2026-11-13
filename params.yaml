@@ -1,0 +1,26 @@
+fuse:
+  # Bumped by hand whenever the fused schema changes; the content hash in
+  # data/fused/manifest.json identifies the exact data version.
+  schema_version: 1
+
+features:
+  # Photodiode signals: the laser-on segment is cut into fixed windows.
+  window_ms: 50
+  welch_nperseg: 1024
+  # Frequency band edges in Hz for relative band power features.
+  bands_hz: [0, 500, 2000, 8000, 25000]
+  # Laser-on detection: AN Power above this fraction of its 99th percentile.
+  laser_on_fraction: 0.5
+  # Coaxial camera frames: fixed intensity threshold (camera counts) that
+  # separates the melt pool from the background, and the upsampling factor
+  # used before contour extraction on the 32x32 sensor.
+  melt_pool_threshold: 60
+  upsample: 4
+
+correlate:
+  top_k: 15
+
+train:
+  seed: 42
+  cv_folds: 5
+  rf_trees: 300
