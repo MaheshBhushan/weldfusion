@@ -5,3 +5,4 @@ __pycache__/
 data/
 .dvc/cache/
 .dvc/tmp/
+/models

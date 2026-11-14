@@ -1,0 +1,231 @@
+{
+  "split": "StratifiedGroupKFold(n_splits=5) grouped by weld_id",
+  "n_welds": 142,
+  "n_windows": 759,
+  "welds_per_class": {
+    "LoC": 73,
+    "OP": 40,
+    "SW": 29
+  },
+  "classes": [
+    "LoC",
+    "OP",
+    "SW"
+  ],
+  "best": {
+    "feature_set": "photodiode+process",
+    "model": "random_forest"
+  },
+  "results": [
+    {
+      "feature_set": "process_only",
+      "model": "logreg",
+      "n_features": 2,
+      "window_heldout_weld": {
+        "accuracy": 0.6403,
+        "balanced_accuracy": 0.6112,
+        "macro_f1": 0.6058,
+        "recall": {
+          "LoC": 0.7321,
+          "OP": 0.5438,
+          "SW": 0.5576
+        }
+      },
+      "weld_heldout_weld": {
+        "accuracy": 0.6479,
+        "balanced_accuracy": 0.6063,
+        "macro_f1": 0.6008,
+        "recall": {
+          "LoC": 0.7671,
+          "OP": 0.5,
+          "SW": 0.5517
+        }
+      },
+      "window_leaky_split": {
+        "accuracy": 0.635,
+        "balanced_accuracy": 0.606,
+        "macro_f1": 0.6001,
+        "recall": {
+          "LoC": 0.7241,
+          "OP": 0.5484,
+          "SW": 0.5455
+        }
+      }
+    },
+    {
+      "feature_set": "process_only",
+      "model": "random_forest",
+      "n_features": 2,
+      "window_heldout_weld": {
+        "accuracy": 0.8722,
+        "balanced_accuracy": 0.8573,
+        "macro_f1": 0.866,
+        "recall": {
+          "LoC": 0.9151,
+          "OP": 0.8387,
+          "SW": 0.8182
+        }
+      },
+      "weld_heldout_weld": {
+        "accuracy": 0.8662,
+        "balanced_accuracy": 0.8453,
+        "macro_f1": 0.8562,
+        "recall": {
+          "LoC": 0.9178,
+          "OP": 0.825,
+          "SW": 0.7931
+        }
+      },
+      "window_leaky_split": {
+        "accuracy": 0.9473,
+        "balanced_accuracy": 0.9433,
+        "macro_f1": 0.9447,
+        "recall": {
+          "LoC": 0.9549,
+          "OP": 0.9539,
+          "SW": 0.9212
+        }
+      }
+    },
+    {
+      "feature_set": "photodiode",
+      "model": "logreg",
+      "n_features": 60,
+      "window_heldout_weld": {
+        "accuracy": 0.8274,
+        "balanced_accuracy": 0.8167,
+        "macro_f1": 0.8133,
+        "recall": {
+          "LoC": 0.8462,
+          "OP": 0.8525,
+          "SW": 0.7515
+        }
+      },
+      "weld_heldout_weld": {
+        "accuracy": 0.8732,
+        "balanced_accuracy": 0.8574,
+        "macro_f1": 0.8622,
+        "recall": {
+          "LoC": 0.9041,
+          "OP": 0.875,
+          "SW": 0.7931
+        }
+      },
+      "window_leaky_split": {
+        "accuracy": 0.8327,
+        "balanced_accuracy": 0.829,
+        "macro_f1": 0.8217,
+        "recall": {
+          "LoC": 0.8329,
+          "OP": 0.8664,
+          "SW": 0.7879
+        }
+      }
+    },
+    {
+      "feature_set": "photodiode",
+      "model": "random_forest",
+      "n_features": 60,
+      "window_heldout_weld": {
+        "accuracy": 0.8827,
+        "balanced_accuracy": 0.8612,
+        "macro_f1": 0.8715,
+        "recall": {
+          "LoC": 0.9337,
+          "OP": 0.8802,
+          "SW": 0.7697
+        }
+      },
+      "weld_heldout_weld": {
+        "accuracy": 0.9155,
+        "balanced_accuracy": 0.8854,
+        "macro_f1": 0.9056,
+        "recall": {
+          "LoC": 0.9726,
+          "OP": 0.925,
+          "SW": 0.7586
+        }
+      },
+      "window_leaky_split": {
+        "accuracy": 0.9078,
+        "balanced_accuracy": 0.8869,
+        "macro_f1": 0.899,
+        "recall": {
+          "LoC": 0.9576,
+          "OP": 0.9032,
+          "SW": 0.8
+        }
+      }
+    },
+    {
+      "feature_set": "photodiode+process",
+      "model": "logreg",
+      "n_features": 62,
+      "window_heldout_weld": {
+        "accuracy": 0.8472,
+        "balanced_accuracy": 0.8503,
+        "macro_f1": 0.8401,
+        "recall": {
+          "LoC": 0.8329,
+          "OP": 0.8756,
+          "SW": 0.8424
+        }
+      },
+      "weld_heldout_weld": {
+        "accuracy": 0.8803,
+        "balanced_accuracy": 0.8834,
+        "macro_f1": 0.8748,
+        "recall": {
+          "LoC": 0.863,
+          "OP": 0.925,
+          "SW": 0.8621
+        }
+      },
+      "window_leaky_split": {
+        "accuracy": 0.8696,
+        "balanced_accuracy": 0.8692,
+        "macro_f1": 0.8623,
+        "recall": {
+          "LoC": 0.8621,
+          "OP": 0.9032,
+          "SW": 0.8424
+        }
+      }
+    },
+    {
+      "feature_set": "photodiode+process",
+      "model": "random_forest",
+      "n_features": 62,
+      "window_heldout_weld": {
+        "accuracy": 0.9117,
+        "balanced_accuracy": 0.9005,
+        "macro_f1": 0.9089,
+        "recall": {
+          "LoC": 0.939,
+          "OP": 0.9078,
+          "SW": 0.8545
+        }
+      },
+      "weld_heldout_weld": {
+        "accuracy": 0.9296,
+        "balanced_accuracy": 0.9084,
+        "macro_f1": 0.9239,
+        "recall": {
+          "LoC": 0.9726,
+          "OP": 0.925,
+          "SW": 0.8276
+        }
+      },
+      "window_leaky_split": {
+        "accuracy": 0.9275,
+        "balanced_accuracy": 0.9164,
+        "macro_f1": 0.9256,
+        "recall": {
+          "LoC": 0.9549,
+          "OP": 0.9217,
+          "SW": 0.8727
+        }
+      }
+    }
+  ]
+}

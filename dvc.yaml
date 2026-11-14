@@ -1,0 +1,75 @@
+stages:
+  download:
+    cmd: weldfusion download
+    deps:
+      - src/weldfusion/download.py
+      - src/weldfusion/sources.py
+    outs:
+      - data/downloads:
+          cache: false
+          persist: true
+      - data/raw:
+          cache: false
+  fuse:
+    cmd: weldfusion fuse
+    deps:
+      - data/raw
+      - src/weldfusion/fuse.py
+      - src/weldfusion/readers.py
+    params:
+      - fuse
+    outs:
+      - data/fused
+  features:
+    cmd: weldfusion features
+    deps:
+      - data/fused
+      - src/weldfusion/features.py
+    params:
+      - features
+    outs:
+      - data/features
+  correlate:
+    cmd: weldfusion correlate
+    deps:
+      - data/features
+      - src/weldfusion/correlate.py
+    params:
+      - correlate
+    outs:
+      - reports/correlation.csv:
+          cache: false
+    metrics:
+      - reports/correlation_summary.json:
+          cache: false
+  train:
+    cmd: weldfusion train
+    deps:
+      - data/features
+      - src/weldfusion/train.py
+    params:
+      - train
+    outs:
+      - models
+      - reports/oof_weld_predictions.csv:
+          cache: false
+      - reports/confusion_matrix.csv:
+          cache: false
+      - reports/feature_importance.csv:
+          cache: false
+    metrics:
+      - reports/metrics.json:
+          cache: false
+  export:
+    cmd: weldfusion export
+    deps:
+      - data/fused/manifest.json
+      - data/features
+      - reports/correlation.csv
+      - reports/metrics.json
+      - src/weldfusion/export.py
+    outs:
+      - reports/weldfusion_summary.xlsx:
+          cache: false
+      - reports/weldfusion_summary.pptx:
+          cache: false

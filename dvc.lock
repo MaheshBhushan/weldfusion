@@ -1,0 +1,180 @@
+schema: '2.0'
+stages:
+  download:
+    cmd: weldfusion download
+    deps:
+    - path: src/weldfusion/download.py
+      hash: md5
+      md5: be31354bd1a3592bc26d2b75eaf3d43c
+      size: 2920
+    - path: src/weldfusion/sources.py
+      hash: md5
+      md5: 219295096392a021675904af3f5a7d41
+      size: 2012
+    outs:
+    - path: data/downloads
+      hash: md5
+      md5: 29605f84f3bf168eaefcfb738a9fcda1.dir
+      size: 301479868
+      nfiles: 6
+    - path: data/raw
+      hash: md5
+      md5: ff0f64e8a84ed365736ee288569951ae.dir
+      size: 443677452
+      nfiles: 165
+  fuse:
+    cmd: weldfusion fuse
+    deps:
+    - path: data/raw
+      hash: md5
+      md5: ff0f64e8a84ed365736ee288569951ae.dir
+      size: 443677452
+      nfiles: 165
+    - path: src/weldfusion/fuse.py
+      hash: md5
+      md5: 89bdbfba5ef57ee49adce76905ce0177
+      size: 6430
+    - path: src/weldfusion/readers.py
+      hash: md5
+      md5: dda3ca69672523ccd50accf42033e772
+      size: 5170
+    params:
+      params.yaml:
+        fuse:
+          schema_version: 1
+    outs:
+    - path: data/fused
+      hash: md5
+      md5: 24adb78a9761567529abcd2451a23152.dir
+      size: 142843054
+      nfiles: 3
+  features:
+    cmd: weldfusion features
+    deps:
+    - path: data/fused
+      hash: md5
+      md5: 24adb78a9761567529abcd2451a23152.dir
+      size: 142843054
+      nfiles: 3
+    - path: src/weldfusion/features.py
+      hash: md5
+      md5: 321794e4d988367f97c874cc599ea159
+      size: 7886
+    params:
+      params.yaml:
+        features:
+          window_ms: 50
+          welch_nperseg: 1024
+          bands_hz:
+          - 0
+          - 500
+          - 2000
+          - 8000
+          - 25000
+          laser_on_fraction: 0.5
+          melt_pool_threshold: 60
+          upsample: 4
+    outs:
+    - path: data/features
+      hash: md5
+      md5: 6f31740e5719ecd1073569a984af04b1.dir
+      size: 752511
+      nfiles: 19
+  correlate:
+    cmd: weldfusion correlate
+    deps:
+    - path: data/features
+      hash: md5
+      md5: 6f31740e5719ecd1073569a984af04b1.dir
+      size: 752511
+      nfiles: 19
+    - path: src/weldfusion/correlate.py
+      hash: md5
+      md5: 4e77897f9816767eb3679762497825a4
+      size: 3960
+    params:
+      params.yaml:
+        correlate:
+          top_k: 15
+    outs:
+    - path: reports/correlation.csv
+      hash: md5
+      md5: 8596f8f75473170bd85181db5a4c7cb2
+      size: 20620
+    - path: reports/correlation_summary.json
+      hash: md5
+      md5: 52eb76fb95c33826d5221555471ddf42
+      size: 5156
+  train:
+    cmd: weldfusion train
+    deps:
+    - path: data/features
+      hash: md5
+      md5: 6f31740e5719ecd1073569a984af04b1.dir
+      size: 752511
+      nfiles: 19
+    - path: src/weldfusion/train.py
+      hash: md5
+      md5: 9a507f637e9ad774a4b8ac61e155edfd
+      size: 7158
+    params:
+      params.yaml:
+        train:
+          seed: 42
+          cv_folds: 5
+          rf_trees: 300
+    outs:
+    - path: models
+      hash: md5
+      md5: e904fb84b24b36029ccc357adc6a85fb.dir
+      size: 2896725
+      nfiles: 1
+    - path: reports/confusion_matrix.csv
+      hash: md5
+      md5: 04a82b3d60986cd529818ace2bf7dd1f
+      size: 72
+    - path: reports/feature_importance.csv
+      hash: md5
+      md5: fc527bae90187aea570dc1ae031bec8d
+      size: 2798
+    - path: reports/metrics.json
+      hash: md5
+      md5: ca26cca3ea20bedfcca2fee79679dd8a
+      size: 5142
+    - path: reports/oof_weld_predictions.csv
+      hash: md5
+      md5: 382dbd41e2fa83cb207628dfcc65c643
+      size: 15484
+  export:
+    cmd: weldfusion export
+    deps:
+    - path: data/features
+      hash: md5
+      md5: 6f31740e5719ecd1073569a984af04b1.dir
+      size: 752511
+      nfiles: 19
+    - path: data/fused/manifest.json
+      hash: md5
+      md5: 7e7f3fcca4a7cb0202443b145ee5f2e5
+      size: 1203
+    - path: reports/correlation.csv
+      hash: md5
+      md5: 8596f8f75473170bd85181db5a4c7cb2
+      size: 20620
+    - path: reports/metrics.json
+      hash: md5
+      md5: ca26cca3ea20bedfcca2fee79679dd8a
+      size: 5142
+    - path: src/weldfusion/export.py
+      hash: md5
+      md5: 1b9412213704bb9916f855aeef6719b7
+      size: 11028
+    outs:
+    - path: reports/weldfusion_summary.pptx
+      hash: md5
+      md5: 8664e19c104200630981fc0396fd69d2
+      size: 72353
+    - path: reports/weldfusion_summary.xlsx
+      hash: md5
+      md5: 06c03dfd13a412b7d5818ae11ce4baa4
+      size: 180521
